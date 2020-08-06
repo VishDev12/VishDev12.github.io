@@ -7,4 +7,4 @@ images:
 tags:
   - test
 ---
-Just a trial of Hugo. Pretty promising so far.
+Just a trial of Hugo. Pretty promising so far. Here's another try.
