@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "https://krvdev.com"
 languageCode = "en-us"
 title = "Vishnu Deva"
 theme = "hello-friend-ng"
