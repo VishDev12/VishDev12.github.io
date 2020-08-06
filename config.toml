@@ -6,8 +6,8 @@ theme = "hello-friend-ng"
 [params]
   dateform        = "Jan 2, 2006"
   dateformShort   = "Jan 2"
-  dateformNum     = "01-02-2006"
-  dateformNumTime = "01-02-2006 15:04 -0700"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
 
   homeSubtitle = "Platform | ML"
   enableSharingButtons = true
