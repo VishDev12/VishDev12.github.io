@@ -7,9 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 06 Aug 2020 07:08:18 +0530</lastBuildDate>
     
 	<atom:link href="https://krvdev.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>My First Post</title>
+      <link>https://krvdev.com/posts/my-first-post/</link>
+      <pubDate>Thu, 06 Aug 2020 07:08:18 +0530</pubDate>
+      
+      <guid>https://krvdev.com/posts/my-first-post/</guid>
+      <description>Just a trial of Hugo. Pretty promising so far. Here&amp;rsquo;s another try.</description>
+    </item>
     
   </channel>
 </rss>
