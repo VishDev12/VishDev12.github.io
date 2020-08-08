@@ -47,7 +47,7 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
   Stop the instance.
   Create an AMI from the instance.">
 
-<meta itemprop="wordCount" content="454">
+<meta itemprop="wordCount" content="483">
 
 
 
@@ -187,28 +187,75 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
 <p>Repeat steps 1-7 whenever you need a change in the AMI.</p>
 </li>
 </ol>
-<p>Since AMI creation is such an involved and lengthy process, we might sometimes prefer to have an installation script that runs every time an instance is launched with the AMI and have the script configure the instance with the latest updates to suit our needs. This renders the launched instance unusable for a period of time until the configuration process is complete, and depending on the length of this period compared to the overall uptime of the instance, might contribute to a significant overhead in costs cumulatively.</p>
-<p>Justifiably, this cost might be acceptable as opposed to the alternative of following the lengthy workflow laid out above every time you need your AMI updated with a new package.</p>
+<p>Since AMI creation is such an involved and lengthy process, we might sometimes prefer to have an installation script that runs every time an instance is launched with the AMI and have the script configure the instance with the latest updates to suit our needs. This renders the launched instance unusable for a period of time until the configuration process is complete.</p>
+<p>Justifiably, this cost might be acceptable considering the alternative of following the lengthy workflow laid out above every time you need your AMI updated with a new package.</p>
 <p>But what if we could automate this process and treat AMI creation like a git push or a simple configuration change?</p>
 <p><strong>Enter Packer.</strong></p>
 <p>Packer automates every step in the AMI creation workflow using a JSON template that you define, which means that your workflow for setting up an AMI will now look like this:</p>
-<pre><code>1. Create a JSON template for Packer to create your AMI.
+<pre><code>1. Create a JSON template to configure Packer to create your AMI.
 
 2. packer validate template.json
 
 3. packer build template.json
-</code></pre>
-<p>When you need to update the AMI, modify your template to make the changes you need, and run steps 2 and 3.</p>
-<h1 id="example-use-case">Example Use Case</h1>
+</code></pre><p>When you need to update the AMI, modify your template to make the changes you need, and run steps 2 and 3.</p>
+<p>The Packer documentation is comprehensive and can be found <a href="https://www.packer.io/docs">here</a>. But in order to get a quick intuition of what Packer can do, let&rsquo;s explore a simple example.</p>
+<h2 id="example-use-case">Example Use Case</h2>
 <p>You need to build an AMI with the following properties:</p>
-<p>The existing AMI that you’ll be building on top of is versioned, so you have a series of existing AMIs that all start with the prefix sample_ami_v{version}. You will also be following this naming guideline for your new AMI.</p>
+<ul>
+<li>
+<p>You have a series of existing AMIs that all start with the prefix <code>sample_ami_v_</code>. You will also be following this naming guideline for your new AMI.</p>
+<blockquote>
 <p>Versioning the AMI names with predictable prefixes allows you to filter them programmatically.</p>
-<p>The nvtop apt package needs to be added to the AMI.</p>
-<p>The AMI needs to be available in the us-east-1 region primarily, but also in the ap-southeast-1 and ap-south-1 regions.</p>
-<p>The AMIs should be accessible from a different AWS account with the account ID: 123412341234.</p>
-<h2 id="breakdown">Breakdown</h2>
-<p>Your JSON template is used to tell Packer what to do. In our case, we need to create an AMI from an existing image and add a package to it.</p>
-
+</blockquote>
+</li>
+<li>
+<p>The <code>redis-server</code> apt package needs to be added to the AMI.</p>
+</li>
+<li>
+<p>The AMI needs to be primarily available in the <code>us-east-1</code> region, and additionally in the <code>ap-southeast-1</code> and <code>ap-south-1</code> regions.</p>
+</li>
+<li>
+<p>The AMIs should be accessible from a different AWS account with the account ID: <code>123456789123</code>.</p>
+</li>
+</ul>
+<h3 id="json-template">JSON Template</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;variables&#34;</span>: {
+    <span style="color:#f92672">&#34;aws_access_key&#34;</span>: <span style="color:#e6db74">&#34;{{env `AWS_ACCESS_KEY_ID`}}&#34;</span>,
+    <span style="color:#f92672">&#34;aws_secret_key&#34;</span>: <span style="color:#e6db74">&#34;{{env `AWS_SECRET_ACCESS_KEY`}}&#34;</span>
+  },
+  <span style="color:#f92672">&#34;builders&#34;</span>: [
+    {
+      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;amazon-ebs&#34;</span>,
+      <span style="color:#f92672">&#34;access_key&#34;</span>: <span style="color:#e6db74">&#34;{{user `aws_access_key`}}&#34;</span>,
+      <span style="color:#f92672">&#34;secret_key&#34;</span>: <span style="color:#e6db74">&#34;{{user `aws_secret_key`}}&#34;</span>,
+      <span style="color:#f92672">&#34;region&#34;</span>: <span style="color:#e6db74">&#34;us-east-1&#34;</span>,
+      <span style="color:#f92672">&#34;source_ami_filter&#34;</span>: {
+        <span style="color:#f92672">&#34;filters&#34;</span>: {
+          <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;sample_ami_v_*&#34;</span>
+        },
+        <span style="color:#f92672">&#34;owners&#34;</span>: [<span style="color:#e6db74">&#34;987654321987&#34;</span>],
+        <span style="color:#f92672">&#34;most_recent&#34;</span>: <span style="color:#66d9ef">true</span>
+      },
+      <span style="color:#f92672">&#34;instance_type&#34;</span>: <span style="color:#e6db74">&#34;t2.medium&#34;</span>,
+      <span style="color:#f92672">&#34;ssh_username&#34;</span>: <span style="color:#e6db74">&#34;ubuntu&#34;</span>,
+      <span style="color:#f92672">&#34;ami_name&#34;</span>: <span style="color:#e6db74">&#34;sample_ami_v_{{timestamp}}&#34;</span>,
+      <span style="color:#f92672">&#34;run_tags&#34;</span>: {
+        <span style="color:#f92672">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;ami_creator&#34;</span>
+      },
+      <span style="color:#f92672">&#34;ami_regions&#34;</span>: [<span style="color:#e6db74">&#34;ap-southeast-1&#34;</span>, <span style="color:#e6db74">&#34;ap-south-1&#34;</span>],
+      <span style="color:#f92672">&#34;ami_users&#34;</span>: [<span style="color:#e6db74">&#34;123456789123&#34;</span>]
+    }
+  ],
+  <span style="color:#f92672">&#34;provisioners&#34;</span>: [
+    {
+      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;shell&#34;</span>,
+      <span style="color:#f92672">&#34;inline_shebang&#34;</span>: <span style="color:#e6db74">&#34;/bin/bash -e&#34;</span>,
+      <span style="color:#f92672">&#34;inline&#34;</span>: [<span style="color:#e6db74">&#34;sudo apt install redis-server&#34;</span>]
+    }
+  ]
+}
+</code></pre></div>
       </div>
     </article>
 
@@ -230,7 +277,7 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        454 Words
+        483 Words
       </p>
 
       <p>
