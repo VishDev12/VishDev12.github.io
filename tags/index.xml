@@ -21,5 +21,14 @@
       <description></description>
     </item>
     
+    <item>
+      <title>AWS, EC2, HashiCorp, Packer</title>
+      <link>https://krvdev.com/tags/aws-ec2-hashicorp-packer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://krvdev.com/tags/aws-ec2-hashicorp-packer/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
