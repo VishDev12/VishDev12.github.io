@@ -3,31 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://krvdev.com/posts/my-first-post/</loc>
-    <lastmod>2020-08-06T07:08:18+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://krvdev.com/posts/</loc>
-    <lastmod>2020-08-06T07:08:18+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://krvdev.com/tags/</loc>
-    <lastmod>2020-08-06T07:08:18+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://krvdev.com/tags/test/</loc>
-    <lastmod>2020-08-06T07:08:18+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://krvdev.com/</loc>
-    <lastmod>2020-08-06T07:08:18+05:30</lastmod>
-  </url>
-  
-  <url>
     <loc>https://krvdev.com/posts/ami-creation-automation/</loc>
   </url>
   
@@ -40,7 +15,19 @@
   </url>
   
   <url>
+    <loc>https://krvdev.com/posts/</loc>
+  </url>
+  
+  <url>
     <loc>https://krvdev.com/series/</loc>
+  </url>
+  
+  <url>
+    <loc>https://krvdev.com/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://krvdev.com/</loc>
   </url>
   
 </urlset>

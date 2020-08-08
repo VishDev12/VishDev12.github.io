@@ -7,19 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Thu, 06 Aug 2020 07:08:18 +0530</lastBuildDate>
     
 	<atom:link href="https://krvdev.com/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>My First Post</title>
-      <link>https://krvdev.com/posts/my-first-post/</link>
-      <pubDate>Thu, 06 Aug 2020 07:08:18 +0530</pubDate>
-      
-      <guid>https://krvdev.com/posts/my-first-post/</guid>
-      <description>Just a trial of Hugo. Pretty promising so far. Here&amp;rsquo;s another try.</description>
-    </item>
     
     <item>
       <title>Automating AMI Creation</title>
@@ -27,15 +17,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://krvdev.com/posts/ami-creation-automation/</guid>
-      <description>This document briefly delves into Hashicorp Packer and what it can do for your AWS AMI creation workflow.
+      <description>This article briefly delves into Hashicorp Packer and what it can do for your AWS AMI creation workflow.
 Setting up an AMI in the usual way is a well-defined sequence of steps:
-Create an instance from an existing AMI, private or public.
-SSH into the instance.
-Execute a series of commands to configure it.
-Stop the instance.
-Create an AMI.
-Terminate the instance.
-If you need the AMI in a different region or account, do that manually from the console.</description>
+  Create an instance from an existing AMI, private or public.
+  SSH into the instance.
+  Execute a series of commands to configure it.
+  Stop the instance.
+  Create an AMI from the instance.</description>
     </item>
     
   </channel>
