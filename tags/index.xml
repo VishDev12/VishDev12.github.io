@@ -12,11 +12,38 @@
     
     
     <item>
-      <title>AWS, EC2, HashiCorp, Packer</title>
-      <link>https://krvdev.com/tags/aws-ec2-hashicorp-packer/</link>
+      <title>AWS</title>
+      <link>https://krvdev.com/tags/aws/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://krvdev.com/tags/aws-ec2-hashicorp-packer/</guid>
+      <guid>https://krvdev.com/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>EC2</title>
+      <link>https://krvdev.com/tags/ec2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://krvdev.com/tags/ec2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HashiCorp</title>
+      <link>https://krvdev.com/tags/hashicorp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://krvdev.com/tags/hashicorp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Packer</title>
+      <link>https://krvdev.com/tags/packer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://krvdev.com/tags/packer/</guid>
       <description></description>
     </item>
     

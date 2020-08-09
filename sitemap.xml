@@ -7,11 +7,23 @@
   </url>
   
   <url>
-    <loc>https://krvdev.com/tags/aws-ec2-hashicorp-packer/</loc>
+    <loc>https://krvdev.com/tags/aws/</loc>
   </url>
   
   <url>
     <loc>https://krvdev.com/blog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://krvdev.com/tags/ec2/</loc>
+  </url>
+  
+  <url>
+    <loc>https://krvdev.com/tags/hashicorp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://krvdev.com/tags/packer/</loc>
   </url>
   
   <url>

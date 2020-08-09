@@ -47,11 +47,11 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
   Stop the instance.
   Create an AMI from the instance.">
 
-<meta itemprop="wordCount" content="483">
+<meta itemprop="wordCount" content="733">
 
 
 
-<meta itemprop="keywords" content="AWS, EC2, HashiCorp, Packer," />
+<meta itemprop="keywords" content="AWS,EC2,HashiCorp,Packer," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Automating AMI Creation"/>
 <meta name="twitter:description" content="This article briefly delves into Hashicorp Packer and what it can do for your AWS AMI creation workflow.
@@ -145,7 +145,7 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        3 minutes
+        4 minutes
 
         
       </p>
@@ -255,7 +255,50 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
     }
   ]
 }
-</code></pre></div>
+</code></pre></div><h3 id="breakdown">Breakdown</h3>
+<ul>
+<li>
+<p>Packer uses the AWS access key and the secret key to access and provision AWS resources.</p>
+</li>
+<li>
+<p>After determining an appropriate AMI by using <code>builders</code> -&gt; <code>source_ami_filter</code>, an instance is launched in &ldquo;us-east-1&rdquo; (<code>builders</code> -&gt; <code>region</code>).</p>
+<ul>
+<li>A temporary security group and key pair are created.</li>
+<li>The security group allows access to port 22 (SSH).</li>
+<li>The tags specified under <code>builders</code> -&gt; <code>run_tags</code> are added to the launched instance.</li>
+</ul>
+</li>
+<li>
+<p>Packer connects to the instance using SSH and executes the commands defined under <code>provisioners</code> -&gt; <code>inline</code>.</p>
+<ul>
+<li>The output of those commands will be displayed on your console.</li>
+<li>The <code>-e</code> flag is used when defining <code>provisioners</code> -&gt; <code>inline_shebang</code> to ensure that errors caused by the commands will trigger the failure of the build process, which prevents your AMIs from being silently built with something that&rsquo;s not according to your specifications.</li>
+</ul>
+</li>
+<li>
+<p>Once that&rsquo;s done, the instance is stopped, and an AMI (named <code>builders</code> -&gt; <code>ami_name</code>) is created using the stopped instance.</p>
+<ul>
+<li>This might take a few minutes.</li>
+</ul>
+</li>
+<li>
+<p>The newly created AMI is then copied over to the regions specified under <code>builders</code> -&gt; <code>ami_regions</code>.</p>
+</li>
+<li>
+<p>Once the copies are done, permissions are granted to these AMIs for the users specified under <code>builders</code> -&gt; <code>ami_users</code>.</p>
+<ul>
+<li>So in this case, we will end up with three AMIs across three different regions and each of those AMIs will be available to two AWS accounts &ndash; the original user and user &ldquo;123456789123&rdquo;.</li>
+</ul>
+</li>
+<li>
+<p>The final step is cleanup.</p>
+<ul>
+<li>The launched instance is terminated.</li>
+<li>The temporary security group and key pair are deleted.</li>
+</ul>
+</li>
+</ul>
+
       </div>
     </article>
 
@@ -266,7 +309,7 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon">
             <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
             <line x1="7" y1="7" x2="7" y2="7"></line>
-          </svg><span class="tag"><a href="https://krvdev.com/tags/aws-ec2-hashicorp-packer/">AWS, EC2, HashiCorp, Packer</a></span>
+          </svg><span class="tag"><a href="https://krvdev.com/tags/aws/">AWS</a></span><span class="tag"><a href="https://krvdev.com/tags/ec2/">EC2</a></span><span class="tag"><a href="https://krvdev.com/tags/hashicorp/">HashiCorp</a></span><span class="tag"><a href="https://krvdev.com/tags/packer/">Packer</a></span>
         </p>
 
       <p>
@@ -277,7 +320,7 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        483 Words
+        733 Words
       </p>
 
       <p>

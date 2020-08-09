@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>EC2 on Vishnu Deva</title>
+    <link>https://krvdev.com/tags/ec2/</link>
+    <description>Recent content in EC2 on Vishnu Deva</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    
+	<atom:link href="https://krvdev.com/tags/ec2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automating AMI Creation</title>
+      <link>https://krvdev.com/posts/ami-creation-automation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://krvdev.com/posts/ami-creation-automation/</guid>
+      <description>This article briefly delves into Hashicorp Packer and what it can do for your AWS AMI creation workflow.
+Setting up an AMI in the usual way is a well-defined sequence of steps:
+  Create an instance from an existing AMI, private or public.
+  SSH into the instance.
+  Execute a series of commands to configure it.
+  Stop the instance.
+  Create an AMI from the instance.</description>
+    </item>
+    
+  </channel>
+</rss>

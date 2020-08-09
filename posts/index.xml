@@ -117,7 +117,50 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
     }
   ]
 }
-</code></pre></div>]]></content>
+</code></pre></div><h3 id="breakdown">Breakdown</h3>
+<ul>
+<li>
+<p>Packer uses the AWS access key and the secret key to access and provision AWS resources.</p>
+</li>
+<li>
+<p>After determining an appropriate AMI by using <code>builders</code> -&gt; <code>source_ami_filter</code>, an instance is launched in &ldquo;us-east-1&rdquo; (<code>builders</code> -&gt; <code>region</code>).</p>
+<ul>
+<li>A temporary security group and key pair are created.</li>
+<li>The security group allows access to port 22 (SSH).</li>
+<li>The tags specified under <code>builders</code> -&gt; <code>run_tags</code> are added to the launched instance.</li>
+</ul>
+</li>
+<li>
+<p>Packer connects to the instance using SSH and executes the commands defined under <code>provisioners</code> -&gt; <code>inline</code>.</p>
+<ul>
+<li>The output of those commands will be displayed on your console.</li>
+<li>The <code>-e</code> flag is used when defining <code>provisioners</code> -&gt; <code>inline_shebang</code> to ensure that errors caused by the commands will trigger the failure of the build process, which prevents your AMIs from being silently built with something that&rsquo;s not according to your specifications.</li>
+</ul>
+</li>
+<li>
+<p>Once that&rsquo;s done, the instance is stopped, and an AMI (named <code>builders</code> -&gt; <code>ami_name</code>) is created using the stopped instance.</p>
+<ul>
+<li>This might take a few minutes.</li>
+</ul>
+</li>
+<li>
+<p>The newly created AMI is then copied over to the regions specified under <code>builders</code> -&gt; <code>ami_regions</code>.</p>
+</li>
+<li>
+<p>Once the copies are done, permissions are granted to these AMIs for the users specified under <code>builders</code> -&gt; <code>ami_users</code>.</p>
+<ul>
+<li>So in this case, we will end up with three AMIs across three different regions and each of those AMIs will be available to two AWS accounts &ndash; the original user and user &ldquo;123456789123&rdquo;.</li>
+</ul>
+</li>
+<li>
+<p>The final step is cleanup.</p>
+<ul>
+<li>The launched instance is terminated.</li>
+<li>The temporary security group and key pair are deleted.</li>
+</ul>
+</li>
+</ul>
+]]></content>
         </item>
         
     </channel>
