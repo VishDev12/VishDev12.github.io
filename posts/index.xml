@@ -1,27 +1,10 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Posts on Vishnu Deva</title>
-        <link>https://krvdev.com/posts/</link>
-        <description>Recent content in Posts on Vishnu Deva</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <atom:link href="https://krvdev.com/posts/index.xml" rel="self" type="application/rss+xml" />
-        
-        <item>
-            <title>Automating AWS AMI Creation</title>
-            <link>https://krvdev.com/posts/automate-ami-creation/</link>
-            <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-            
-            <guid>https://krvdev.com/posts/automate-ami-creation/</guid>
-            <description>This article briefly delves into Hashicorp Packer and what it can do for your AMI creation workflow.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Vishnu Deva</title><link>https://krvdev.com/posts/</link><description>Recent content in Posts on Vishnu Deva</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sun, 09 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://krvdev.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Automating AWS AMI Creation</title><link>https://krvdev.com/posts/automate-ami-creation/</link><pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate><guid>https://krvdev.com/posts/automate-ami-creation/</guid><description>This article briefly delves into Hashicorp Packer and what it can do for your AMI creation workflow.
 Setting up an AMI is a well-defined process that usually follows these steps:
-  Launch an instance from an existing AMI, private or public.
-  SSH into the instance.
-  Execute a series of commands to configure it.
-  Stop the instance.
-  Create an AMI from the instance.</description>
-            <content type="html"><![CDATA[<p>This article briefly delves into Hashicorp <a href="https://www.packer.io/">Packer</a> and what it can do for your AMI creation workflow.</p>
+Launch an instance from an existing AMI, private or public.
+SSH into the instance.
+Execute a series of commands to configure it.
+Stop the instance.
+Create an AMI from the instance.</description><content type="html"><![CDATA[<p>This article briefly delves into Hashicorp <a href="https://www.packer.io/">Packer</a> and what it can do for your AMI creation workflow.</p>
 <p>Setting up an AMI is a well-defined process that usually follows these steps:</p>
 <ol>
 <li>
@@ -185,8 +168,4 @@ Setting up an AMI is a well-defined process that usually follows these steps:
 <p>You can have multiple builders in a single template, which allows you to define different AMIs in a single file. You can use this feature to create AMIs for multiple platforms at the same time. An example can be found <a href="https://learn.hashicorp.com/tutorials/packer/getting-started-parallel-builds">here</a>.</p>
 </li>
 </ul>
-]]></content>
-        </item>
-        
-    </channel>
-</rss>
+]]></content></item></channel></rss>
