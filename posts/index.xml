@@ -9,23 +9,23 @@
         <atom:link href="https://krvdev.com/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
-            <title>Automating AMI Creation</title>
-            <link>https://krvdev.com/posts/ami-creation-automation/</link>
+            <title>Automating AWS AMI Creation</title>
+            <link>https://krvdev.com/posts/automate-ami-creation/</link>
             <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
             
-            <guid>https://krvdev.com/posts/ami-creation-automation/</guid>
-            <description>This article briefly delves into Hashicorp Packer and what it can do for your AWS AMI creation workflow.
-Setting up an AMI in the usual way is a well-defined sequence of steps:
-  Create an instance from an existing AMI, private or public.
+            <guid>https://krvdev.com/posts/automate-ami-creation/</guid>
+            <description>This article briefly delves into Hashicorp Packer and what it can do for your AMI creation workflow.
+Setting up an AMI is a well-defined process that usually follows these steps:
+  Launch an instance from an existing AMI, private or public.
   SSH into the instance.
   Execute a series of commands to configure it.
   Stop the instance.
   Create an AMI from the instance.</description>
-            <content type="html"><![CDATA[<p>This article briefly delves into Hashicorp Packer and what it can do for your AWS AMI creation workflow.</p>
-<p>Setting up an AMI in the usual way is a well-defined sequence of steps:</p>
+            <content type="html"><![CDATA[<p>This article briefly delves into Hashicorp <a href="https://www.packer.io/">Packer</a> and what it can do for your AMI creation workflow.</p>
+<p>Setting up an AMI is a well-defined process that usually follows these steps:</p>
 <ol>
 <li>
-<p>Create an instance from an existing AMI, private or public.</p>
+<p>Launch an instance from an existing AMI, private or public.</p>
 </li>
 <li>
 <p>SSH into the instance.</p>
@@ -49,18 +49,18 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
 <p>Repeat steps 1-7 whenever you need a change in the AMI.</p>
 </li>
 </ol>
-<p>Since AMI creation is such an involved and lengthy process, we might sometimes prefer to have an installation script that runs every time an instance is launched with the AMI and have the script configure the instance with the latest updates to suit our needs. This renders the launched instance unusable for a period of time until the configuration process is complete.</p>
-<p>Justifiably, this cost might be acceptable considering the alternative of following the lengthy workflow laid out above every time you need your AMI updated with a new package.</p>
+<p>Since AMI creation is such an involved and lengthy process, we might sometimes prefer to have an initialization script that runs every time an instance is launched with the AMI and have the script configure the instance with the latest updates to suit our needs. This renders the launched instance unusable for a period of time until the configuration process is complete and might even contribute to higher costs if the workloads are short-lived.</p>
+<p>Justifiably, these costs might be more than acceptable considering the alternative, which would be having to follow the lengthy workflow laid out above every time you need your AMI updated.</p>
 <p>But what if we could automate this process and treat AMI creation like a git push or a simple configuration change?</p>
 <p><strong>Enter Packer.</strong></p>
 <p>Packer automates every step in the AMI creation workflow using a JSON template that you define, which means that your workflow for setting up an AMI will now look like this:</p>
-<pre><code>1. Create a JSON template to configure Packer to create your AMI.
+<pre><code>1. Create a JSON template.
 
 2. packer validate template.json
 
 3. packer build template.json
 </code></pre><p>When you need to update the AMI, modify your template to make the changes you need, and run steps 2 and 3.</p>
-<p>The Packer documentation is comprehensive and can be found <a href="https://www.packer.io/docs">here</a>. But in order to get a quick intuition of what Packer can do, let&rsquo;s explore a simple example.</p>
+<p>The Packer documentation is comprehensive and can be found <a href="https://www.packer.io/docs">here</a> and a tutorial can be found <a href="https://learn.hashicorp.com/tutorials/packer/getting-started-build-image">here</a>. But in order to get a quick intuition of what Packer can do, let&rsquo;s explore a simple example.</p>
 <h2 id="example-use-case">Example Use Case</h2>
 <p>You need to build an AMI with the following properties:</p>
 <ul>
@@ -74,7 +74,7 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
 <p>The <code>redis-server</code> apt package needs to be added to the AMI.</p>
 </li>
 <li>
-<p>The AMI needs to be primarily available in the <code>us-east-1</code> region, and additionally in the <code>ap-southeast-1</code> and <code>ap-south-1</code> regions.</p>
+<p>The AMI needs to be available in the <code>us-east-1</code> region primarily, and additionally in the <code>ap-southeast-1</code> and <code>ap-south-1</code> regions.</p>
 </li>
 <li>
 <p>The AMIs should be accessible from a different AWS account with the account ID: <code>123456789123</code>.</p>
@@ -121,6 +121,9 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
 <ul>
 <li>
 <p>Packer uses the AWS access key and the secret key to access and provision AWS resources.</p>
+<ul>
+<li>Set environment variables on the command line and define them inside <code>variables</code>; they can be now be accessed in your template as user variables.</li>
+</ul>
 </li>
 <li>
 <p>After determining an appropriate AMI by using <code>builders</code> -&gt; <code>source_ami_filter</code>, an instance is launched in &ldquo;us-east-1&rdquo; (<code>builders</code> -&gt; <code>region</code>).</p>
@@ -133,7 +136,7 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
 <li>
 <p>Packer connects to the instance using SSH and executes the commands defined under <code>provisioners</code> -&gt; <code>inline</code>.</p>
 <ul>
-<li>The output of those commands will be displayed on your console.</li>
+<li>The output of these commands will be displayed on your console.</li>
 <li>The <code>-e</code> flag is used when defining <code>provisioners</code> -&gt; <code>inline_shebang</code> to ensure that errors caused by the commands will trigger the failure of the build process, which prevents your AMIs from being silently built with something that&rsquo;s not according to your specifications.</li>
 </ul>
 </li>
@@ -153,11 +156,33 @@ Setting up an AMI in the usual way is a well-defined sequence of steps:
 </ul>
 </li>
 <li>
-<p>The final step is cleanup.</p>
+<p>The final step is clean-up.</p>
 <ul>
 <li>The launched instance is terminated.</li>
 <li>The temporary security group and key pair are deleted.</li>
 </ul>
+</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>Thus, with a bit of initial setup, Packer automates the entire AMI build process. Here are some take-aways and points to note:</p>
+<ul>
+<li>
+<p>The configuration of the launched instance can be as simple as installing a single package, as in the example above, or as complex as running an Ansible Playbook. You can find a list of provisioners that you can use to configure your instance <a href="https://www.packer.io/docs/provisioners/ansible">here</a>.</p>
+</li>
+<li>
+<p>Commit your packer templates to your code repository to help you version your changes.</p>
+<ul>
+<li>If possible, have a folder set aside for Packer templates and have one copy for each version of the template there (v1, v2, v3, etc) to give yourself a clear overview of the changes being added to your AMI over time.</li>
+</ul>
+</li>
+<li>
+<p>Use <code>builders</code> -&gt; <code>ami_description</code> to describe the changes you&rsquo;re making to the AMI.</p>
+</li>
+<li>
+<p>Packer only creates your AMIs and in no way manages them. So it&rsquo;s important to keep this in mind when setting up an automated pipeline using Packer, especially if you&rsquo;re specifying availability for multiple regions. Over time, these AMIs might invisibly add up in the background, contributing to higher costs.</p>
+</li>
+<li>
+<p>You can have multiple builders in a single template, which allows you to define different AMIs in a single file. You can use this feature to create AMIs for multiple platforms at the same time. An example can be found <a href="https://learn.hashicorp.com/tutorials/packer/getting-started-parallel-builds">here</a>.</p>
 </li>
 </ul>
 ]]></content>

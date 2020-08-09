@@ -12,14 +12,14 @@
     
     
     <item>
-      <title>Automating AMI Creation</title>
-      <link>https://krvdev.com/posts/ami-creation-automation/</link>
+      <title>Automating AWS AMI Creation</title>
+      <link>https://krvdev.com/posts/automate-ami-creation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://krvdev.com/posts/ami-creation-automation/</guid>
-      <description>This article briefly delves into Hashicorp Packer and what it can do for your AWS AMI creation workflow.
-Setting up an AMI in the usual way is a well-defined sequence of steps:
-  Create an instance from an existing AMI, private or public.
+      <guid>https://krvdev.com/posts/automate-ami-creation/</guid>
+      <description>This article briefly delves into Hashicorp Packer and what it can do for your AMI creation workflow.
+Setting up an AMI is a well-defined process that usually follows these steps:
+  Launch an instance from an existing AMI, private or public.
   SSH into the instance.
   Execute a series of commands to configure it.
   Stop the instance.
