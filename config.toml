@@ -10,10 +10,9 @@ theme = "hello-friend-ng"
   dateformNumTime = "2006-01-02 15:04 -0700"
 
   homeSubtitle = "Platform | ML"
-  enableSharingButtons = true
   
   description = "My Tech Blog"
-  keywords = "homepage, blog"
+  keywords = "blog"
 
   defaultTheme = "dark"
 
@@ -31,8 +30,16 @@ theme = "hello-friend-ng"
         logoText = "cd ~"
         logoHomeLink = "/"
 
-  # And you can even create generic menu
   [[menu.main]]
     identifier = "blog"
     name       = "Blog"
     url        = "/posts"
+
+  # Social icons
+  [[params.social]]
+    name = "github"
+    url  = "https://github.com/VishDev12/"
+
+  [[params.social]]
+    name = "email"
+    url  = "krvdev@outloook.com"

@@ -1,6 +1,6 @@
 ---
 title: "Automating AWS AMI Creation"
-date: "2020-08-09"
+date: "2020-08-09T17:30:40+05:30"
 tags:
   - AWS
   - EC2
