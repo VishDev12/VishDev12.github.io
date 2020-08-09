@@ -2,7 +2,10 @@
 title: "Automating AMI Creation"
 toc: false
 tags:
-  - AWS, EC2, HashiCorp, Packer
+  - AWS
+  - EC2
+  - HashiCorp
+  - Packer
 ---
 
 This article briefly delves into Hashicorp Packer and what it can do for your AWS AMI creation workflow.
@@ -53,7 +56,6 @@ The Packer documentation is comprehensive and can be found [here](https://www.pa
 You need to build an AMI with the following properties:
 
 * You have a series of existing AMIs that all start with the prefix `sample_ami_v_`. You will also be following this naming guideline for your new AMI.
-
   > Versioning the AMI names with predictable prefixes allows you to filter them programmatically.
 
 * The `redis-server` apt package needs to be added to the AMI.
@@ -61,6 +63,7 @@ You need to build an AMI with the following properties:
 * The AMI needs to be primarily available in the `us-east-1` region, and additionally in the `ap-southeast-1` and `ap-south-1` regions.
 
 * The AMIs should be accessible from a different AWS account with the account ID: `123456789123`.
+
 
 ### JSON Template
 
@@ -102,3 +105,29 @@ You need to build an AMI with the following properties:
   ]
 }
 ```
+
+
+### Breakdown
+
+* Packer uses the AWS access key and the secret key to access and provision AWS resources.
+
+* After determining an appropriate AMI by using `builders` -> `source_ami_filter`, an instance is launched in "us-east-1" (`builders` -> `region`).
+  * A temporary security group and key pair are created.
+  * The security group allows access to port 22 (SSH).
+  * The tags specified under `builders` -> `run_tags` are added to the launched instance.
+
+* Packer connects to the instance using SSH and executes the commands defined under `provisioners` -> `inline`.
+  * The output of those commands will be displayed on your console.
+  * The `-e` flag is used when defining `provisioners` -> `inline_shebang` to ensure that errors caused by the commands will trigger the failure of the build process, which prevents your AMIs from being silently built with something that's not according to your specifications.
+
+* Once that's done, the instance is stopped, and an AMI (named `builders` -> `ami_name`) is created using the stopped instance.
+  * This might take a few minutes.
+
+* The newly created AMI is then copied over to the regions specified under `builders` -> `ami_regions`.
+
+* Once the copies are done, permissions are granted to these AMIs for the users specified under `builders` -> `ami_users`.
+  * So in this case, we will end up with three AMIs across three different regions and each of those AMIs will be available to two AWS accounts -- the original user and user "123456789123".
+
+* The final step is cleanup.
+  * The launched instance is terminated.
+  * The temporary security group and key pair are deleted.
