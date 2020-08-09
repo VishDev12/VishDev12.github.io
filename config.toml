@@ -12,7 +12,7 @@ theme = "hello-friend-ng"
   homeSubtitle = "Platform | ML"
   enableSharingButtons = true
   
-  description = "My tech blog"
+  description = "My Tech Blog"
   keywords = "homepage, blog"
 
   defaultTheme = "dark"
